@@ -16,13 +16,6 @@ resource "aws_lb_target_group" "scaling_fastapi_target_group" {
   }
 }
 
-# Attach EC2 instance to target group
-resource "aws_lb_target_group_attachment" "scaling_fastapi_target" {
-  target_group_arn = aws_lb_target_group.scaling_fastapi_target_group.arn
-  target_id        = aws_instance.scaling_fastapi_server.id
-  port             = 80
-}
-
 # Create Load Balancer
 resource "aws_lb" "scaling_fastapi_lb" {
   name               = "scaling-fastapi-lb"

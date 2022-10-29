@@ -1,14 +1,14 @@
 # Create security group for instances
 resource "aws_security_group" "allow_http_lb" {
-  name        = "allow_http"
+  name        = "allow_http_lb"
   description = "Allow HTTP inbound traffic"
   vpc_id      = aws_vpc.scaling_fastapi_vpc.id
 
   ingress {
-    from_port        = 80
-    to_port          = 80
-    protocol         = "tcp"
-    cidr_blocks      = [aws_vpc.scaling_fastapi_vpc.cidr_block]
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = [aws_vpc.scaling_fastapi_vpc.cidr_block]
   }
 
   egress {
@@ -20,7 +20,7 @@ resource "aws_security_group" "allow_http_lb" {
   }
 
   tags = {
-    Name = "Allow HTTP"
+    Name = "Allow HTTP LB"
   }
 }
 
@@ -31,10 +31,10 @@ resource "aws_security_group" "allow_http" {
   vpc_id      = aws_vpc.scaling_fastapi_vpc.id
 
   ingress {
-    from_port        = 80
-    to_port          = 80
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {

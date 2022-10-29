@@ -1,6 +1,6 @@
 # Create security group for instances
-resource "aws_security_group" "allow_http_lb" {
-  name        = "allow_http_lb"
+resource "aws_security_group" "allow_http" {
+  name        = "allow_http"
   description = "Allow HTTP inbound traffic"
   vpc_id      = aws_vpc.scaling_fastapi_vpc.id
 
@@ -25,8 +25,8 @@ resource "aws_security_group" "allow_http_lb" {
 }
 
 # Create security group for load balancer
-resource "aws_security_group" "allow_http" {
-  name        = "allow_http"
+resource "aws_security_group" "allow_http_lb" {
+  name        = "allow_http_lb"
   description = "Allow HTTP traffic"
   vpc_id      = aws_vpc.scaling_fastapi_vpc.id
 

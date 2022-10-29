@@ -74,8 +74,13 @@ resource "aws_route_table" "public_rt" {
   }
 }
 
-# Create public route table association
-resource "aws_route_table_association" "public_rt_association" {
+# Create public route table associations
+resource "aws_route_table_association" "public_rt_association_a" {
   subnet_id      = aws_subnet.public_subnet_a.id
+  route_table_id = aws_route_table.public_rt.id
+}
+
+resource "aws_route_table_association" "public_rt_association_b" {
+  subnet_id      = aws_subnet.public_subnet_b.id
   route_table_id = aws_route_table.public_rt.id
 }

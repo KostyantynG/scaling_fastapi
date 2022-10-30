@@ -25,16 +25,16 @@ else:
     print(f"S3 bucket has been created with the name \"{bucket_name_backend}\" in region \"{AWS_REGION}\"")
 
 # Upload archived code to s3 bucket
-s3C = boto3.client("s3")
-object_name = "script.zip"
-file_name = os.path.join(pathlib.Path(__file__).parent.resolve(), "script.zip")
-bucket = s3Res.Bucket(bucket_name)
-for obj in bucket.objects.all():
-    file = obj.key
-if file != object_name:
-    response = s3C.upload_file(file_name, bucket_name, object_name)
-    print("File has been uploaded")
-else:
-    print("File already exists")
+# s3C = boto3.client("s3")
+# object_name = "script.zip"
+# file_name = os.path.join(pathlib.Path(__file__).parent.resolve(), "script.zip")
+# bucket = s3Res.Bucket(bucket_name)
+# for obj in bucket.objects.all():
+#     file = obj.key
+# if file != object_name:
+#     response = s3C.upload_file(file_name, bucket_name, object_name)
+#     print("File has been uploaded")
+# else:
+#     print("File already exists")
 
 

@@ -51,7 +51,7 @@ resource "aws_subnet" "private_subnet_b" {
   }
 }
 
-# Create internet gateway
+# Create IGW
 resource "aws_internet_gateway" "scaling_fastapi_igw" {
   vpc_id = aws_vpc.scaling_fastapi_vpc.id
 

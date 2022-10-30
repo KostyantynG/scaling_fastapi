@@ -27,7 +27,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Run python script
-        run: Python3 create_s3_buckets.py 
+        run: python create_s3_buckets.py 
       - name: Upload script to s3
         run: |
           zip -r script.zip requirements.txt main.py

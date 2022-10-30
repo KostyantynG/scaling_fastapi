@@ -10,8 +10,12 @@ resource "aws_launch_template" "scaling_fastapi_template" {
   iam_instance_profile {
     name = "LabInstanceProfile"
   }
-  tags = {
-    "Name" = "Scaling fastapi server"
+  tag_specifications {
+    resource_type = "instance"
+
+    tags = {
+      Name = "Scaling fastapi server"
+    }
   }
 }
 

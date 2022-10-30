@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Upload cript to s3
+      - name: Upload script to s3
         run: |
           zip -r script.zip requirements.txt main.py
           aws s3 cp script.zip s3://scaling-fastapi-bucket-1

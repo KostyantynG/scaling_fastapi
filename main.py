@@ -15,14 +15,17 @@ jobs = [
     }
     ]
 
+# Get health check (root directory)
 @app.get("/")
 def root():
     return {"Health check" : "OK"}
 
+# Get list of jobs
 @app.get("/job")
 def list_jobs():
     return jobs
 
+# Get job by id
 @app.get("/job/{job_id}")
 def get_by_id(job_id):
     for job in jobs:

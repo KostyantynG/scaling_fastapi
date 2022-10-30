@@ -1,0 +1,26 @@
+name: "Pack and upload to s3"
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  python_script:
+    name: "Python script"
+    runs-on: ubuntu-latest
+    env:	
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+      AWS_REGION: 'us-west-2'
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.1.7
+      - name: Pack and upload to s3
+        run: |
+          zip -r script.zip requirements.txt main.py
+          python3 create_s3_upload_script.py

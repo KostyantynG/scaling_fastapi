@@ -14,9 +14,14 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
       AWS_REGION: 'us-west-2'
+      AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
 
     steps:
       - uses: actions/checkout@v2
+      - name: Upload cript to s3
+        run: |
+          zip -r script.zip requirements.txt main.py
+          aws s3 cp script.zip s3://scaling-fastapi-bucket-1
       - uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.1.7

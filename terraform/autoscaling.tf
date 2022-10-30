@@ -25,7 +25,7 @@ resource "aws_autoscaling_group" "scaling_fastapi_autoscaling_group" {
   desired_capacity   = 2
   max_size           = 2
   min_size           = 2
-
+  target_group_arns = [aws_lb_target_group.scaling_fastapi_target_group.arn]
   launch_template {
     id      = aws_launch_template.scaling_fastapi_template.id
     version = "$Latest"
@@ -33,7 +33,7 @@ resource "aws_autoscaling_group" "scaling_fastapi_autoscaling_group" {
 }
 
 # Create autoscaling group attachment to a load balancer
-resource "aws_autoscaling_attachment" "asg_attachment_webserver" {
-  autoscaling_group_name = aws_autoscaling_group.scaling_fastapi_autoscaling_group.id
-  lb_target_group_arn    = aws_lb_target_group.scaling_fastapi_target_group.arn
-}
+# resource "aws_autoscaling_attachment" "asg_attachment_webserver" {
+#   autoscaling_group_name = aws_autoscaling_group.scaling_fastapi_autoscaling_group.id
+#   lb_target_group_arn    = aws_lb_target_group.scaling_fastapi_target_group.arn
+# }

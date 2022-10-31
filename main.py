@@ -3,6 +3,7 @@ import uvicorn
 
 app = FastAPI()
 
+# Create list of jobs
 jobs = [
     { 
         "id" : "first",

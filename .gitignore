@@ -3,3 +3,4 @@ __pycache*
 .terra*
 terraform.*
 check_new_version*
+.DS*

@@ -24,7 +24,7 @@ resource "aws_security_group" "allow_http" {
   }
 }
 
-# Create security group for load balancer
+# Create security group for Load Balancer
 resource "aws_security_group" "allow_http_lb" {
   name        = "allow_http_lb"
   description = "Allow HTTP traffic"

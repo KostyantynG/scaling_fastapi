@@ -21,7 +21,6 @@ jobs:
       - name: Calculate checksum
         run: |
           echo "sum=`cksum script.zip`" >> $GITHUB_ENV
-          echo "Initial checksum is ${{ env.sum }}"
       - name: Setup Python 3.10
         uses: actions/setup-python@v4
         with: 
@@ -34,9 +33,12 @@ jobs:
         run: |
           python create_s3_buckets.py 
           zip -r script.zip requirements.txt main.py
-          echo "sum1=`cksum script.zip`" >> $GITHUB_ENV
-          echo "Final checksum is ${{ env.sum1 }}"
+          echo "sum1=`cksum script.zip`" >> $GITHUB_ENV  
       - name: Compare checksums
+        run: |
+          echo "Initial checksum is ${{ env.sum }}"
+          echo "Final checksum is ${{ env.sum1 }}"
+      - name: Upload code to s3
         if: ${{ env.sum }} != ${{ env.sum1 }}
         run: |
           aws s3 cp script.zip s3://scaling-fastapi-bucket-1

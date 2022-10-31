@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Calculate checksum
         run: |
-          echo "sum=`shasum -a 256 script.zip`" >> $GITHUB_ENV
+          echo "sum=script.zip" >> $GITHUB_ENV
       - name: Setup Python 3.10
         uses: actions/setup-python@v4
         with: 
@@ -33,15 +33,12 @@ jobs:
         run: |
           python create_s3_buckets.py 
           zip -r script.zip requirements.txt main.py
-          echo "sum1=`shasum -a 256 script.zip`" >> $GITHUB_ENV  
-      - name: Compare checksums
+          echo "sum1=script.zip" >> $GITHUB_ENV  
+      - name: Compare archives and upload code to s3
         run: |
-          echo "Initial checksum is ${{ env.sum }}"
-          echo "Final checksum is ${{ env.sum1 }}"
-      - name: Upload code to s3
-        if: ${{ env.sum }} != ${{ env.sum1 }}
-        run: |
-          aws s3 cp script.zip s3://scaling-fastapi-bucket-1
+          if [[ $(diff -y --suppress-common-lines  <(unzip -lqq ${{ env.sum }}) <(unzip -lqq ${{ env.sum1 }})) == "" ]];then
+            aws s3 cp script.zip s3://scaling-fastapi-bucket-1
+          fi
       - uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.1.7

@@ -18,6 +18,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Calculate checksum
+        run: |
+          echo `cksum script.zip`
+          echo "sum=`cksum script.zip`" >> $GITHUB_ENV
       - name: Setup Python 3.10
         uses: actions/setup-python@v4
         with: 
@@ -26,11 +30,15 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Run python script
-        run: python create_s3_buckets.py 
-      - name: Upload script to s3
+      - name: Run python script and archive code
         run: |
+          python create_s3_buckets.py 
           zip -r script.zip requirements.txt main.py
+          echo `cksum script.zip`
+          echo "sum1=`cksum script.zip`" >> $GITHUB_ENV
+      - name: Compare checksums
+        if: ${{ env.sum }} != ${{ env.sum1 }}
+        run: |
           aws s3 cp script.zip s3://scaling-fastapi-bucket-1
       - uses: hashicorp/setup-terraform@v1
         with:

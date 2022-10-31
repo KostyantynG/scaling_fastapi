@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 import uvicorn
 
+# Create fastapi
 app = FastAPI()
 
 # Create list of jobs

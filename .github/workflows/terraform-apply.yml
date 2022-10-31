@@ -32,7 +32,7 @@ jobs:
       - name: Run python script and archive code
         run: |
           python create_s3_buckets.py 
-          zip -r script.zip requirements.txt main.py
+          zip -r script1.zip requirements.txt main.py
           echo "sum1=script1.zip" >> $GITHUB_ENV  
       - name: Compare archives and upload code to s3
         run: |

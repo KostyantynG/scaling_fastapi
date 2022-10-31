@@ -2,5 +2,4 @@ venv*
 __pycache*
 .terra*
 terraform.*
-script.zip
 check_new_version*

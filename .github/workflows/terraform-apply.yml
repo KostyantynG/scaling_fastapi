@@ -45,7 +45,7 @@ jobs:
             <(unzip -vqq script.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3) \
             <(unzip -vqq script1.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3)` != "" ]];then
             aws s3 cp script.zip s3://scaling-fastapi-bucket-1/script.zip
-            aws ec2 terminate-instances --instance-ids "${{ env.id1 }}" "${{ env.id2 }}"
+            aws ec2 terminate-instances --instance-ids ${{ env.id1 }} ${{ env.id2 }}
           fi
       - uses: hashicorp/setup-terraform@v1
         with:

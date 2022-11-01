@@ -22,10 +22,10 @@ jobs:
         run: |
           zip -r script.zip requirements.txt main.py
           echo "id1=`aws ec2 describe-instances --filters Name=availability-zone,Values=us-west-2a \
-            Name=instance-state-name,Values=running --query "Reservations[*].Instances[*].[InstanceId] \
+            Name=instance-state-name,Values=running --query "Reservations[*].Instances[*].[InstanceId]" \
             --output text`" >> $GITHUB_ENV
           echo "id2=`aws ec2 describe-instances --filters Name=availability-zone,Values=us-west-2b \
-            Name=instance-state-name,Values=running --query "Reservations[*].Instances[*].[InstanceId] \
+            Name=instance-state-name,Values=running --query "Reservations[*].Instances[*].[InstanceId]" \
             --output text`" >> $GITHUB_ENV
       - name: Setup Python 3.10
         uses: actions/setup-python@v4

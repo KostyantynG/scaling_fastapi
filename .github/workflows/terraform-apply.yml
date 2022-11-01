@@ -36,6 +36,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Create s3 buckets and download code from s3 bucket
+        id: s3
         run: |
           python create_s3_buckets.py 
           aws s3 cp s3://scaling-fastapi-bucket-1/script.zip script1.zip
@@ -46,9 +47,10 @@ jobs:
             <(unzip -vqq script.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3) \
             <(unzip -vqq script1.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3)`" \
             >> $GITHUB_ENV
+        continue-on-error: true
       - name: Upload code to s3
         run: |
-          if [ compare != ""]]
+          if [ compare != "" || steps.s3.outcome != 'success' ]]
           then
             aws s3 cp script.zip s3://scaling-fastapi-bucket-1/script.zip
           fi

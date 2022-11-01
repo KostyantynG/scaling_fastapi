@@ -49,20 +49,15 @@ jobs:
             >> $GITHUB_ENV
         continue-on-error: true
       - name: Upload code to s3
-        run: |
-          if [ compare != "" || steps.s3.outcome != 'success' ]]
-          then
-            aws s3 cp script.zip s3://scaling-fastapi-bucket-1/script.zip
-          fi
+        if: ${{ compare }} != "" || steps.s3.outcome != 'success'
+        run: aws s3 cp script.zip s3://scaling-fastapi-bucket-1/script.zip
       - name: Terminate instances
+        if: ${{ compare }} != ""
         run: |
-          if [[ compare != ""]]
+          if [[ ${{ env.id1 }} != "" && ${{ env.id2 }} != "" ]]
           then
-            if [[ ${{ env.id1 }} != "" && ${{ env.id2 }} != "" ]]
-            then
-              echo "Terminating instances..."
-              aws ec2 terminate-instances --instance-ids ${{ env.id1 }} ${{ env.id2 }}
-            fi
+            echo "Terminating instances..."
+            aws ec2 terminate-instances --instance-ids ${{ env.id1 }} ${{ env.id2 }}
           fi
         continue-on-error: true
       - uses: hashicorp/setup-terraform@v1

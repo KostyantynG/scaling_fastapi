@@ -25,7 +25,7 @@ jobs = [
     },{
         "id" : "5",
         "title" : "CEO",
-        "description" : "THE BIGGEST BOSS"
+        "description" : "THE BIGGGGGGGGEST BOSS"
     }
     ]
 

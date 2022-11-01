@@ -14,6 +14,10 @@ jobs = [
         "id" : "second",
         "title" : "Cloud Developer",
         "description" : "Build applications in cloud, build infrastructure"
+    },{
+        "id" : "third",
+        "title" : "DevOps Engineed",
+        "description" : "Build and monitor infrastructure, cooperate with various departments"
     }
     ]
 

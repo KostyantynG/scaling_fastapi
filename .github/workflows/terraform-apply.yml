@@ -39,6 +39,7 @@ jobs:
         run: |
           python create_s3_buckets.py 
           aws s3 cp s3://scaling-fastapi-bucket-1/script.zip script1.zip
+        continue-on-error: true
       - name: Compare archives and upload code to s3
         run: |
           if [[ `diff \

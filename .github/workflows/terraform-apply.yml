@@ -45,9 +45,11 @@ jobs:
           if [[ `diff \
             <(unzip -vqq script.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3) \
             <(unzip -vqq script1.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3)` != "" ]];then
-            aws s3 cp script.zip s3://scaling-fastapi-bucket-1/script.zip
-            echo "Terminating instances with id: ${{ env.id1 }} and ${{ env.id2 }}"
-            aws ec2 terminate-instances --instance-ids ${{ env.id1 }} ${{ env.id2 }}
+            if ${{ env.id1 }} != "" || ${{ env.id2 }} != "";then
+              aws s3 cp script.zip s3://scaling-fastapi-bucket-1/script.zip
+              echo "Terminating instances with id: ${{ env.id1 }} and ${{ env.id2 }}"
+              aws ec2 terminate-instances --instance-ids ${{ env.id1 }} ${{ env.id2 }}
+            fi
           fi
         continue-on-error: true
       - uses: hashicorp/setup-terraform@v1

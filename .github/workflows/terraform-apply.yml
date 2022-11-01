@@ -49,6 +49,7 @@ jobs:
             echo "Terminating instances with id: ${{ env.id1 }} and ${{ env.id2 }}"
             aws ec2 terminate-instances --instance-ids ${{ env.id1 }} ${{ env.id2 }}
           fi
+        continue-on-error: true
       - uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.1.7

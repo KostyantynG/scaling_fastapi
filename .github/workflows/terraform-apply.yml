@@ -44,8 +44,10 @@ jobs:
         run: |
           if [[ `diff \
             <(unzip -vqq script.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3) \
-            <(unzip -vqq script1.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3)` != "" ]];then
-            if ${{ env.id1 }} != "" && ${{ env.id2 }} != "";then
+            <(unzip -vqq script1.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3)` != "" ]]
+          then
+            if ${{ env.id1 }} != "" && ${{ env.id2 }} != ""
+            then
               echo "Terminating instances..."
               aws ec2 terminate-instances --instance-ids ${{ env.id1 }} ${{ env.id2 }}
             fi

@@ -1,7 +1,4 @@
 import boto3
-from botocore.exceptions import ClientError
-import pathlib
-import os
 
 AWS_REGION = "us-west-2"
 client = boto3.client("s3", region_name=AWS_REGION)

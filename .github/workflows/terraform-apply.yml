@@ -21,6 +21,7 @@ jobs:
       - name: Archive local code to zip
         run: |
           zip -r script.zip requirements.txt main.py
+          echo "sum=`cksum script.zip`" >> $GITHUB_ENV 
       - name: Setup Python 3.10
         uses: actions/setup-python@v4
         with: 
@@ -33,8 +34,10 @@ jobs:
         run: |
           python create_s3_buckets.py 
           aws s3 cp s3://scaling-fastapi-bucket-1/script.zip script1.zip
+          echo "sum1=`cksum script1.zip`" >> $GITHUB_ENV
       - name: Compare archives and upload code to s3
         run: |
+          echo "First checksum is ${{ env.sum }}, second checksum is ${{ env.sum1 }}"
           if [[ $(diff -y --suppress-common-lines  <(unzip -lqq script.zip) <(unzip -lqq script1.zip)) != "" ]];then
             aws s3 cp script.zip s3://scaling-fastapi-bucket-1/script.zip
           fi

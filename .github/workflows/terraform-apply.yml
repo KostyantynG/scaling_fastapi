@@ -49,10 +49,10 @@ jobs:
             >> $GITHUB_ENV
         continue-on-error: true
       - name: Upload code to s3
-        if: ${{ compare }} != "" || steps.s3.outcome != 'success'
+        if: ${{ env.compare }} != "" || steps.s3.outcome != 'success'
         run: aws s3 cp script.zip s3://scaling-fastapi-bucket-1/script.zip
       - name: Terminate instances
-        if: ${{ compare }} != ""
+        if: ${{ env.compare }} != ""
         run: |
           if [[ ${{ env.id1 }} != "" && ${{ env.id2 }} != "" ]]
           then

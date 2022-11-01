@@ -40,11 +40,21 @@ jobs:
           python create_s3_buckets.py 
           aws s3 cp s3://scaling-fastapi-bucket-1/script.zip script1.zip
         continue-on-error: true
-      - name: Compare archives and terminate instances
+      - name: Compare archives
         run: |
-          if [[ `diff \
+          echo "compare=`diff \
             <(unzip -vqq script.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3) \
-            <(unzip -vqq script1.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3)` != "" ]]
+            <(unzip -vqq script1.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3)`" \
+            >> $GITHUB_ENV
+      - name: Upload code to s3
+        run: |
+          if [ compare != ""]]
+          then
+            aws s3 cp script.zip s3://scaling-fastapi-bucket-1/script.zip
+          fi
+      - name: Terminate instances
+        run: |
+          if [[ compare != ""]]
           then
             if [[ ${{ env.id1 }} != "" && ${{ env.id2 }} != "" ]]
             then
@@ -53,14 +63,6 @@ jobs:
             fi
           fi
         continue-on-error: true
-      - name: Upload code to s3
-        run: |
-          if [[ `diff \
-            <(unzip -vqq script.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3) \
-            <(unzip -vqq script1.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3)` != "" ]]
-          then
-            aws s3 cp script.zip s3://scaling-fastapi-bucket-1/script.zip
-          fi
       - uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.1.7

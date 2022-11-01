@@ -35,9 +35,7 @@ jobs:
           aws s3 cp s3://scaling-fastapi-bucket-1/script.zip script1.zip
       - name: Compare archives and upload code to s3
         run: |
-          export "unzip1=`<(unzip -vqq script.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3)`"
-          eyport "unzip2=`<(unzip -vqq script1.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3)`"
-          if [[ `diff unzip1 unzip2` != "" ]];then
+          if [[ `diff <(unzip -vqq script.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3) <(unzip -vqq script1.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3)` != "" ]];then
             aws s3 cp script.zip s3://scaling-fastapi-bucket-1/script.zip
           fi
       - uses: hashicorp/setup-terraform@v1

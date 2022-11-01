@@ -21,7 +21,7 @@ jobs = [
     },{
         "id" : "4",
         "title" : "Project Manager",
-        "description" : "Be a bossish man"
+        "description" : "Control development"
     },{
         "id" : "5",
         "title" : "CEO",

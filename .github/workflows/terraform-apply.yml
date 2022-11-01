@@ -21,7 +21,6 @@ jobs:
       - name: Archive local code to zip
         run: |
           zip -r script.zip requirements.txt main.py
-          echo "sum=`cksum script.zip`" >> $GITHUB_ENV 
       - name: Setup Python 3.10
         uses: actions/setup-python@v4
         with: 
@@ -34,11 +33,12 @@ jobs:
         run: |
           python create_s3_buckets.py 
           aws s3 cp s3://scaling-fastapi-bucket-1/script.zip script1.zip
-          echo "sum1=`cksum script1.zip`" >> $GITHUB_ENV
       - name: Compare archives and upload code to s3
         run: |
-          echo `diff <(unzip -lqq script.zip) <(unzip -lqq script1.zip)`
-          if [[ $(diff -y --suppress-common-lines  <(unzip -lqq script.zip) <(unzip -lqq script1.zip)) != "" ]];then
+          echo "difference=`diff \
+          <(unzip -vqq script.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3) \
+          <(unzip -vqq script1.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3)`" >> $GITHUB_ENV
+          if [[ ${{ difference }} != "" ]];then
             aws s3 cp script.zip s3://scaling-fastapi-bucket-1/script.zip
           fi
       - uses: hashicorp/setup-terraform@v1

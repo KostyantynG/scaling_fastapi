@@ -60,7 +60,7 @@ resource "aws_internet_gateway" "scaling_fastapi_igw" {
   }
 }
 
-# Create public route table
+# Create Public route table
 resource "aws_route_table" "public_rt" {
   vpc_id = aws_vpc.scaling_fastapi_vpc.id
 

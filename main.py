@@ -7,21 +7,25 @@ app = FastAPI()
 # Create list of jobs
 jobs = [
     { 
-        "id" : "first",
+        "id" : "1",
         "title" : "Cloud Engineer",
         "description" : "Container orchestration, build and maintain infrastructure"
     },{
-        "id" : "second",
+        "id" : "2",
         "title" : "Cloud Developer",
         "description" : "Build applications in cloud, build infrastructure"
     },{
-        "id" : "third",
+        "id" : "3",
         "title" : "DevOps Engineer",
         "description" : "Build and monitor infrastructure, cooperate with various departments"
     },{
-        "id" : "fourth",
+        "id" : "4",
         "title" : "Project Manager",
-        "description" : "Be a boss man"
+        "description" : "Be a bossish man"
+    },{
+        "id" : "5",
+        "title" : "CEO",
+        "description" : "Be a BOSS man"
     }
     ]
 

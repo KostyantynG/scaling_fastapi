@@ -40,7 +40,7 @@ resource "aws_subnet" "private_subnet_a" {
   }
 }
 
-# Create private subnet in AZ b
+# Create Private Subnet in AZ b
 resource "aws_subnet" "private_subnet_b" {
   vpc_id            = aws_vpc.scaling_fastapi_vpc.id
   cidr_block        = "10.0.3.0/24"

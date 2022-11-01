@@ -47,6 +47,9 @@ jobs:
             <(unzip -vqq script.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3) \
             <(unzip -vqq script1.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3)`" \
             >> $GITHUB_ENV
+          echo `diff \
+            <(unzip -vqq script.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3) \
+            <(unzip -vqq script1.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3)`
         continue-on-error: true
       - name: Upload code to s3
         if: ${{ env.compare }} != "" || steps.s3.outcome != 'success'

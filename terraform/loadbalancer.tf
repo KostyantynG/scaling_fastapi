@@ -16,7 +16,7 @@ resource "aws_lb_target_group" "scaling_fastapi_target_group" {
   }
 }
 
-# Create Load balancer
+# Create Load Balancer
 resource "aws_lb" "scaling_fastapi_lb" {
   name               = "scaling-fastapi-lb"
   internal           = false

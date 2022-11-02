@@ -47,8 +47,11 @@ jobs:
         continue-on-error: true
       - name: Upload code to s3
         id: copy
-        if: ${{ env.compare }} != ""
-        run: aws s3 cp script.zip s3://scaling-fastapi-bucket-1/script.zip
+        run: |
+          if [[ -n "${{ env.compare }}" ]]
+          then
+            aws s3 cp script.zip s3://scaling-fastapi-bucket-1/script.zip
+          fi
       - name: Terminate instances
         if: steps.copy.outcome == 'success'
         run: |

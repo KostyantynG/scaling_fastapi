@@ -39,7 +39,7 @@ def root():
 def list_jobs():
     return jobs
 
-# Get job by id
+# Get job by ID
 @app.get("/job/{job_id}")
 def get_by_id(job_id):
     for job in jobs:

@@ -25,7 +25,7 @@ resource "aws_lb" "scaling_fastapi_lb" {
   subnets            = [aws_subnet.public_subnet_a.id, aws_subnet.public_subnet_b.id]
 }
 
-# Add Target Group as a listener to Load Balancer
+# Add Target Group as a Listener to Load Balancer
 resource "aws_lb_listener" "scaling_fastapi_listener" {
   load_balancer_arn = aws_lb.scaling_fastapi_lb.arn
   port              = "80"

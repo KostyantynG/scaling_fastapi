@@ -43,14 +43,11 @@ jobs:
         continue-on-error: true
       - name: Compare archives
         run: |
-          echo "compare=`diff \
-            <(unzip -vqq script.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3) \
-            <(unzip -vqq script1.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3)`" \
-            >> $GITHUB_ENV
+          echo "compare=`diff <(unzip -vqq script.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3) <(unzip -vqq script1.zip | awk '{$2=""; $3=""; $4=""; $5=""; $6=""; print}' | sort -k3)`" >> $GITHUB_ENV
         continue-on-error: true
       - name: Upload code to s3
         id: copy
-        if: ${{ env.compare }} != ""
+        if: ${{ env.compare != '' }}
         run: aws s3 cp script.zip s3://scaling-fastapi-bucket-1/script.zip
       - name: Terminate instances
         if: steps.copy.outcome == 'success'

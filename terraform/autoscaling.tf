@@ -19,7 +19,7 @@ resource "aws_launch_template" "scaling_fastapi_template" {
   }
 }
 
-# Create Autoscaling Group
+# Create Autoscaling group
 resource "aws_autoscaling_group" "scaling_fastapi_autoscaling_group" {
   vpc_zone_identifier = [aws_subnet.private_subnet_a.id, aws_subnet.private_subnet_b.id]
   desired_capacity   = 2
